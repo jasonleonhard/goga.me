@@ -3,17 +3,17 @@ package main
 import (
 	"encoding/gob"
 	"fmt"
-	"github.com/tlehman/goga.me/dal"
-	"github.com/tlehman/goga.me/handlers"
-	"github.com/tlehman/goga.me/libenv"
-	"github.com/tlehman/goga.me/libunix"
-	"github.com/tlehman/goga.me/middlewares"
+	"github.com/Sirupsen/logrus"
 	"github.com/carbocation/interpose"
 	gorilla_mux "github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"github.com/Sirupsen/logrus"
+	"github.com/tlehman/goga.me/dal"
+	"github.com/tlehman/goga.me/handlers"
+	"github.com/tlehman/goga.me/libenv"
+	"github.com/tlehman/goga.me/libunix"
+	"github.com/tlehman/goga.me/middlewares"
 	"github.com/tylerb/graceful"
 	"net/http"
 	"time"
@@ -76,6 +76,8 @@ func (app *Application) mux() *gorilla_mux.Router {
 	router.HandleFunc("/login", handlers.GetLogin).Methods("GET")
 	router.HandleFunc("/login", handlers.PostLogin).Methods("POST")
 	router.HandleFunc("/logout", handlers.GetLogout).Methods("GET")
+	router.HandleFunc("/matches", handlers.PostMatches).Methods("POST")
+	router.HandleFunc("/matches/{id:[0-9]+}", handlers.GetMatch).Methods("GET")
 
 	router.Handle("/users/{id:[0-9]+}", MustLogin(http.HandlerFunc(handlers.PostPutDeleteUsersID))).Methods("POST", "PUT", "DELETE")
 
@@ -111,7 +113,7 @@ func main() {
 		Server:  &http.Server{Addr: serverAddress, Handler: middle},
 	}
 
-	logrus.Infoln("Running HTTP server on "+ serverAddress)
+	logrus.Infoln("Running HTTP server on " + serverAddress)
 	if certFile != "" && keyFile != "" {
 		srv.ListenAndServeTLS(certFile, keyFile)
 	} else {

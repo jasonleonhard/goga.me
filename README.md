@@ -1,3 +1,19 @@
+# Go Game
+A Go Game written in the Go Programming language.
+
+The game starts by showing all the matches currently being played. If a user wants to create a match, 
+they click 'New Match'
+
+## TODO
+
+ - [ ] Allow new matches to be created from web
+    - implement POST /matches
+    - redirect to GET /matches/:id
+ - [ ] New matches have black and white user equal to creator, join updates the white (second) user
+ - [ ] match.Join(whiteUser) updates the white user
+    - implement PUT /matches to join the match
+ - [ ] Make board UI for `/matches/:match_id`
+
 ## Installation
 
 1. Install PostgreSQL 9.4.x

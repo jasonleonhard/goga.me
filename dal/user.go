@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
+	"time"
 )
 
 func NewUser(db *sqlx.DB) *User {
@@ -18,9 +19,11 @@ func NewUser(db *sqlx.DB) *User {
 }
 
 type UserRow struct {
-	ID       int64  `db:"id"`
-	Email    string `db:"email"`
-	Password string `db:"password"`
+	ID        int64      `db:"id"`
+	CreatedAt *time.Time `db:"created_at"`
+	UpdatedAt *time.Time `db:"updated_at"`
+	Email     string     `db:"email"`
+	Password  string     `db:"password"`
 }
 
 type User struct {

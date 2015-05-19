@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"github.com/tlehman/goga.me/dal"
-	"github.com/tlehman/goga.me/libhttp"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
+	"github.com/tlehman/goga.me/dal"
+	"github.com/tlehman/goga.me/libhttp"
 	"html/template"
 	"net/http"
 )
