@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo "Creating database goga.me..."
+createdb goga.me
+
+echo "Running migration on postgres://tlehman@localhost:5432/goga.me?sslmode=disable..."
+migrate -url postgres://tlehman@localhost:5432/goga.me?sslmode=disable -path ./migrations up
+
+echo "Creating database goga.me-test"
+createdb goga.me-test
+
+echo "Running migration on postgres://tlehman@localhost:5432/goga.me-test?sslmode=disable..."
+migrate -url postgres://tlehman@localhost:5432/goga.me-test?sslmode=disable -path ./migrations up
